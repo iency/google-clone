@@ -1,19 +1,20 @@
 import React from 'react';
 import './Home.css';
-import MicIcon from '@mui/icons-material/Mic';
-import SearchIcon from '@mui/icons-material/Search';
+import { Link } from "react-router-dom";
+// import MicIcon from '@mui/icons-material/Mic';
+// import SearchIcon from '@mui/icons-material/Search';
 
 const Home = () => {
   return (
     <div className='home'>
-      <h1>This is homepage</h1>
-
       <div className="home__header">
         <div className="home__headerLeft">
-
+          <Link to='/about'>About</Link>
+          <Link to='/store'>Store</Link>
         </div>
         <div className="home__headerRight">
-          
+          <Link to='/gmail'>Gmail</Link>
+          <Link to='/images'>Images</Link>
         </div>
       </div>
 
