@@ -2,7 +2,6 @@ import React from 'react';
 import './SearchPage.css';
 import { useStateValue } from './StateProvider';
 import useGoogleSearch from './useGoogleSearch';
-import Response from "./Response";
 import { Link } from 'react-router-dom';
 import Search from "./Search";
 import SearchIcon from '@mui/icons-material/Search';
@@ -14,9 +13,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const SearchPage = () => {
   const [{ term }, dispatch] = useStateValue();
-  // const { data } = useGoogleSearch(term);
-
-  const data = Response;
+  const { data } = useGoogleSearch(term);
 
   console.log(data)
   return (
@@ -71,10 +68,40 @@ const SearchPage = () => {
           </div>
         </div>
       </div>
+      {term && (
+        <div className="searchPage__results">
+          <p className="searchPage__resultsCount">
+            About {data?.searchInformation.formattedTotalResults} results ({data?.searchInformation.formattedSearchTime} seconds) for {term}
+          </p>
 
-      <div className="searchPage__results">
+          {data.items.map(item => (
+            <div className="searchPage__resultLink">
+              <a href={item.link}>
+                {item.pagemap?.cse_image?.length > 0 && item.pagemap?.cse_image[0]?.src && (
+                  <img
+                    className="searchPage__resultImage"
+                    src={
+                      item.pagemap?.cse_image?.length > 0 && item.pagemap?.cse_image[0]?.src
+                    }
+                    alt=""
+                  />
+                )} 
 
-      </div>
+                {item.displayLink}
+              </a>   
+              <a className="searchPage__resultTitle" href={item.link}>
+                <h2>
+                  {item.title}
+                </h2>
+              </a>
+              <p className="searchPage__resultSnippet">
+                {item.snippet}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
+
     </div>
   );
 }
